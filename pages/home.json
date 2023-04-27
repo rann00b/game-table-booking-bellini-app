@@ -1,0 +1,1030 @@
+{
+  "name": "home",
+  "type": "page",
+  "url": "/home",
+  "params": {},
+  "variables": [
+    {
+      "name": "init",
+      "type": "method",
+      "description": "",
+      "body": "$ctrl.bookings = [\r\n    {\r\n        dateTime: Date.now(),\r\n        game: \"Age of Sigmar\",\r\n        points: 1000,\r\n        players: [\"Vivien\", \"Chris\"],\r\n        description: \"Some description\",\r\n        status: \"pending\"\r\n    }\r\n]",
+      "invokeOnLoad": true,
+      "isAsync": false,
+      "returnType": {
+        "name": "any"
+      },
+      "parameters": []
+    },
+    {
+      "name": "bookings",
+      "type": "array",
+      "description": "",
+      "children": []
+    },
+    {
+      "name": "selectedBooking",
+      "type": "property",
+      "description": "",
+      "value": ""
+    },
+    {
+      "name": "sidePanelVisible",
+      "type": "property",
+      "description": "The visibility of the side panel.",
+      "value": ""
+    },
+    {
+      "name": "form",
+      "type": "object",
+      "description": "",
+      "properties": [
+        {
+          "name": "newBooking",
+          "type": "object",
+          "description": "",
+          "properties": [
+            {
+              "name": "dateTime",
+              "type": "property",
+              "description": "",
+              "value": ""
+            },
+            {
+              "name": "game",
+              "type": "property",
+              "description": "",
+              "value": ""
+            },
+            {
+              "name": "points",
+              "type": "property",
+              "description": "",
+              "value": ""
+            },
+            {
+              "name": "players",
+              "type": "array",
+              "description": "",
+              "children": []
+            },
+            {
+              "name": "description",
+              "type": "property",
+              "description": "",
+              "value": ""
+            }
+          ]
+        },
+        {
+          "name": "handleBook",
+          "type": "method",
+          "description": "",
+          "body": "$ctrl.bookings.push({\r\n    ...$ctrl.form.newBooking,\r\n    dateTime: $ctrl.form.newBooking.dateTime.getTime(),\r\n    status: \"pending\"\r\n});\r\n\r\n$ctrl.form.newBooking = {};\r\n$ctrl.sidePanelVisible = false;\r\n\r\n$ctrl.$notificationManager.show(\"La réservation a été ajouté !\")",
+          "invokeOnLoad": false,
+          "isAsync": false,
+          "returnType": {
+            "name": "any"
+          },
+          "parameters": []
+        }
+      ]
+    },
+    {
+      "name": "handleAdd",
+      "type": "method",
+      "description": "",
+      "body": "$ctrl.form.newBooking = {\r\n    dateTime: new Date(),\r\n    game: 'Warhammer 40k',\r\n    points: 2000\r\n};\r\n$ctrl.sidePanelVisible = true;",
+      "invokeOnLoad": false,
+      "isAsync": false,
+      "returnType": {
+        "name": "any"
+      },
+      "parameters": []
+    },
+    {
+      "name": "$notificationManager",
+      "type": "service",
+      "description": ""
+    },
+    {
+      "name": "handleCancel",
+      "type": "method",
+      "description": "",
+      "body": "if(!$ctrl.selectedBooking) return;\r\n\r\n$ctrl.selectedBooking.status = \"canceled\";\r\n\r\n$ctrl.$notificationManager.show(\"La réservation a été annulé !\");",
+      "invokeOnLoad": false,
+      "isAsync": false,
+      "returnType": {
+        "name": "any"
+      },
+      "parameters": []
+    },
+    {
+      "name": "handleAccept",
+      "type": "method",
+      "description": "",
+      "body": "if(!$ctrl.selectedBooking) return;\r\n\r\n$ctrl.selectedBooking.status = \"accepted\";\r\n\r\n$ctrl.$notificationManager.show(\"La réservation a été accepté !\");",
+      "invokeOnLoad": false,
+      "isAsync": false,
+      "returnType": {
+        "name": "any"
+      },
+      "parameters": []
+    },
+    {
+      "name": "handleRefuse",
+      "type": "method",
+      "description": "",
+      "body": "if (!$ctrl.selectedBooking) return;\r\n\r\n$ctrl.$modal.open(\"refuse-booking-modal\").then(result => {\r\n    if (result.result === \"ok\") {\r\n        $ctrl.selectedBooking.status = \"refused\";\r\n        $ctrl.selectedBooking.reason = result.reason;\r\n\r\n        $ctrl.$notificationManager.show(\"La réservation a été refusé !\");\r\n    }\r\n})\r\n",
+      "invokeOnLoad": false,
+      "isAsync": true,
+      "returnType": {
+        "name": "any"
+      },
+      "parameters": []
+    },
+    {
+      "name": "$modal",
+      "type": "service",
+      "description": ""
+    }
+  ],
+  "children": [
+    {
+      "name": "div",
+      "nodeName": "div",
+      "elementId": "",
+      "attributes": [],
+      "classList": [],
+      "conditionalClasses": [],
+      "contentType": "text",
+      "displayExpression": "",
+      "events": {},
+      "iterate": {
+        "array": "",
+        "variable": ""
+      },
+      "styles": [
+        {
+          "enabled": true,
+          "property": "height",
+          "value": "100% !important"
+        },
+        {
+          "enabled": true,
+          "property": "width",
+          "value": "100% !important"
+        }
+      ],
+      "layout": {
+        "container": {
+          "type": "grid",
+          "columns": [
+            {
+              "type": "span",
+              "value": 1
+            }
+          ],
+          "rows": [
+            {
+              "type": "max-content"
+            },
+            {
+              "type": "span",
+              "value": 1
+            }
+          ],
+          "items": []
+        }
+      },
+      "children": [
+        {
+          "name": "div",
+          "nodeName": "div",
+          "elementId": "",
+          "attributes": [],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [
+            {
+              "enabled": true,
+              "property": "height",
+              "value": "100% !important"
+            },
+            {
+              "enabled": true,
+              "property": "width",
+              "value": "100% !important"
+            }
+          ],
+          "layout": {
+            "container": {
+              "type": "box",
+              "orientation": "column",
+              "crossAxisAlignment": "stretch",
+              "items": []
+            },
+            "cell": {
+              "type": "grid-item"
+            }
+          },
+          "children": [
+            {
+              "name": "img",
+              "nodeName": "img",
+              "elementId": "",
+              "attributes": [],
+              "classList": [],
+              "conditionalClasses": [],
+              "contentType": "text",
+              "displayExpression": "",
+              "events": {},
+              "iterate": {
+                "array": "",
+                "variable": ""
+              },
+              "styles": [
+                {
+                  "property": "width",
+                  "value": "10%",
+                  "enabled": true
+                },
+                {
+                  "property": "min-width",
+                  "value": "",
+                  "enabled": true
+                },
+                {
+                  "property": "max-width",
+                  "value": "",
+                  "enabled": true
+                },
+                {
+                  "property": "margin-top",
+                  "value": "10px",
+                  "enabled": true
+                }
+              ],
+              "layout": {
+                "cell": {
+                  "type": "box-item",
+                  "growFactor": 1,
+                  "shrinkFactor": 1,
+                  "crossAxisAlignment": "center"
+                }
+              },
+              "children": [],
+              "source": {
+                "url": "assets/apps/game-table-booking/tableraze-logo.jpg",
+                "evaluate": false
+              }
+            },
+            {
+              "name": "h1",
+              "nodeName": "h1",
+              "elementId": "",
+              "attributes": [],
+              "classList": [],
+              "conditionalClasses": [],
+              "contentType": "text",
+              "displayExpression": "",
+              "events": {},
+              "iterate": {
+                "array": "",
+                "variable": ""
+              },
+              "styles": [
+                {
+                  "property": "text-align",
+                  "value": "center",
+                  "enabled": true
+                }
+              ],
+              "layout": {
+                "cell": {
+                  "type": "box-item",
+                  "growFactor": 1,
+                  "shrinkFactor": 1,
+                  "mainSize": "100%"
+                }
+              },
+              "children": [
+                {
+                  "name": "text",
+                  "nodeName": "text",
+                  "textContent": "Système de Réservation de Table",
+                  "evaluate": false
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "div",
+          "nodeName": "div",
+          "elementId": "",
+          "attributes": [],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [
+            {
+              "enabled": true,
+              "property": "height",
+              "value": "100% !important"
+            },
+            {
+              "enabled": true,
+              "property": "width",
+              "value": "100% !important"
+            }
+          ],
+          "layout": {
+            "container": {
+              "type": "grid",
+              "columns": [
+                {
+                  "type": "span",
+                  "value": 1
+                }
+              ],
+              "rows": [
+                {
+                  "type": "max-content"
+                },
+                {
+                  "type": "span",
+                  "value": 1
+                }
+              ],
+              "items": []
+            },
+            "cell": {
+              "type": "grid-item"
+            }
+          },
+          "children": [
+            {
+              "name": "div",
+              "nodeName": "div",
+              "elementId": "",
+              "attributes": [],
+              "classList": [],
+              "conditionalClasses": [],
+              "contentType": "text",
+              "displayExpression": "",
+              "events": {},
+              "iterate": {
+                "array": "",
+                "variable": ""
+              },
+              "styles": [],
+              "layout": {
+                "cell": {
+                  "type": "grid-item"
+                }
+              },
+              "children": [
+                {
+                  "name": "Button",
+                  "nodeName": "bln-button",
+                  "elementId": "",
+                  "attributes": [
+                    {
+                      "property": "core",
+                      "value": ""
+                    }
+                  ],
+                  "classList": [],
+                  "conditionalClasses": [],
+                  "contentType": "text",
+                  "displayExpression": "",
+                  "events": {},
+                  "iterate": {
+                    "array": "",
+                    "variable": ""
+                  },
+                  "styles": [],
+                  "children": [],
+                  "type": "core-component",
+                  "id": "button",
+                  "expressions": [
+                    {
+                      "expression": "\"Ajouter une réservation\"",
+                      "to": "label"
+                    },
+                    {
+                      "expression": "\"primary\"",
+                      "to": "type"
+                    },
+                    {
+                      "expression": "({\n  \"type\": \"font-icon\",\n  \"style\": \"regular\",\n  \"name\": \"calendar-plus\",\n  \"position\": \"left\"\n})",
+                      "to": "icon"
+                    },
+                    {
+                      "expression": "$ctrl.handleAdd()",
+                      "to": "onClick"
+                    }
+                  ],
+                  "mapLines": []
+                },
+                {
+                  "name": "Button",
+                  "nodeName": "bln-button",
+                  "elementId": "",
+                  "attributes": [
+                    {
+                      "property": "core",
+                      "value": ""
+                    }
+                  ],
+                  "classList": [],
+                  "conditionalClasses": [],
+                  "contentType": "text",
+                  "displayExpression": "",
+                  "events": {},
+                  "iterate": {
+                    "array": "",
+                    "variable": ""
+                  },
+                  "styles": [
+                    {
+                      "property": "--bln-button-primary-bg-color",
+                      "value": "#ecb43c",
+                      "enabled": true
+                    },
+                    {
+                      "property": "--bln-button-primary-hovered-bg-color",
+                      "value": "#d89a15",
+                      "enabled": true
+                    },
+                    {
+                      "property": "--bln-button-primary-active-bg-color",
+                      "value": "#bd8712",
+                      "enabled": true
+                    }
+                  ],
+                  "children": [],
+                  "type": "core-component",
+                  "id": "button",
+                  "expressions": [
+                    {
+                      "expression": "\"Annuler la réservation\"",
+                      "to": "label"
+                    },
+                    {
+                      "expression": "\"primary\"",
+                      "to": "type"
+                    },
+                    {
+                      "expression": "({\n  \"type\": \"font-icon\",\n  \"position\": \"left\",\n  \"name\": \"calendar-minus\",\n  \"style\": \"regular\"\n})",
+                      "to": "icon"
+                    },
+                    {
+                      "expression": "$ctrl.handleCancel()",
+                      "to": "onClick"
+                    },
+                    {
+                      "expression": "!$ctrl.selectedBooking || $ctrl.selectedBooking.status === \"canceled\";",
+                      "to": "isDisabled"
+                    }
+                  ],
+                  "mapLines": []
+                },
+                {
+                  "name": "Button",
+                  "nodeName": "bln-button",
+                  "elementId": "",
+                  "attributes": [
+                    {
+                      "property": "core",
+                      "value": ""
+                    }
+                  ],
+                  "classList": [],
+                  "conditionalClasses": [],
+                  "contentType": "text",
+                  "displayExpression": "",
+                  "events": {},
+                  "iterate": {
+                    "array": "",
+                    "variable": ""
+                  },
+                  "styles": [
+                    {
+                      "property": "--bln-button-primary-bg-color",
+                      "value": "#5ab03b",
+                      "enabled": true
+                    },
+                    {
+                      "property": "--bln-button-primary-hovered-bg-color",
+                      "value": "#488d2f",
+                      "enabled": true
+                    },
+                    {
+                      "property": "--bln-button-primary-active-bg-color",
+                      "value": "#3f7b29",
+                      "enabled": true
+                    }
+                  ],
+                  "children": [],
+                  "type": "core-component",
+                  "id": "button",
+                  "expressions": [
+                    {
+                      "expression": "\"Accepter la réservation\"",
+                      "to": "label"
+                    },
+                    {
+                      "expression": "\"primary\"",
+                      "to": "type"
+                    },
+                    {
+                      "expression": "({\n  \"type\": \"font-icon\",\n  \"position\": \"left\",\n  \"name\": \"calendar-check\",\n  \"style\": \"regular\"\n})",
+                      "to": "icon"
+                    },
+                    {
+                      "expression": "$ctrl.handleAccept()",
+                      "to": "onClick"
+                    },
+                    {
+                      "expression": "!$ctrl.selectedBooking || $ctrl.selectedBooking.status === \"accepted\";",
+                      "to": "isDisabled"
+                    }
+                  ],
+                  "mapLines": []
+                },
+                {
+                  "name": "Button",
+                  "nodeName": "bln-button",
+                  "elementId": "",
+                  "attributes": [
+                    {
+                      "property": "core",
+                      "value": ""
+                    }
+                  ],
+                  "classList": [],
+                  "conditionalClasses": [],
+                  "contentType": "text",
+                  "displayExpression": "",
+                  "events": {},
+                  "iterate": {
+                    "array": "",
+                    "variable": ""
+                  },
+                  "styles": [
+                    {
+                      "property": "--bln-button-primary-bg-color",
+                      "value": "#d93a3a",
+                      "enabled": true
+                    },
+                    {
+                      "property": "--bln-button-primary-hovered-bg-color",
+                      "value": "#b82424",
+                      "enabled": true
+                    },
+                    {
+                      "property": "--bln-button-primary-active-bg-color",
+                      "value": "#a11f1f",
+                      "enabled": true
+                    }
+                  ],
+                  "children": [],
+                  "type": "core-component",
+                  "id": "button",
+                  "expressions": [
+                    {
+                      "expression": "\"Refuser la réservation\"",
+                      "to": "label"
+                    },
+                    {
+                      "expression": "\"primary\"",
+                      "to": "type"
+                    },
+                    {
+                      "expression": "({\n  \"type\": \"font-icon\",\n  \"position\": \"left\",\n  \"name\": \"minus-circle\",\n  \"style\": \"solid\"\n})",
+                      "to": "icon"
+                    },
+                    {
+                      "expression": "$ctrl.handleRefuse()",
+                      "to": "onClick"
+                    },
+                    {
+                      "expression": "!$ctrl.selectedBooking || $ctrl.selectedBooking.status === \"refused\";",
+                      "to": "isDisabled"
+                    }
+                  ],
+                  "mapLines": []
+                }
+              ]
+            },
+            {
+              "name": "Table",
+              "nodeName": "bln-table",
+              "elementId": "",
+              "attributes": [
+                {
+                  "property": "core",
+                  "value": ""
+                }
+              ],
+              "classList": [],
+              "conditionalClasses": [],
+              "contentType": "text",
+              "displayExpression": "",
+              "events": {},
+              "iterate": {
+                "array": "",
+                "variable": ""
+              },
+              "styles": [],
+              "layout": {
+                "cell": {
+                  "type": "grid-item"
+                }
+              },
+              "children": [],
+              "type": "core-component",
+              "id": "table",
+              "expressions": [
+                {
+                  "expression": "[{\n        name: \"Date et Heure\",\n        valueKey: \"dateTime\",\n        width: \"20%\",\n        type: \"number\",\n        formatter: \"moment(value).format('DD/MM/yyyy HH:mm')\",\n    },\n    {\n        name: \"Jeu\",\n        type: \"string\",\n        valueKey: \"game\",\n        width: \"20%\"\n    },\n    {\n        name: \"Points\",\n        type: \"string\",\n        valueKey: \"points\",\n        width: \"10%\"\n    },\n    {\n        name: \"Joueurs\",\n        type: \"string\",\n        formatter: \"value.split(',').join(', ')\",\n        valueKey: \"players\",\n        width: \"20%\"\n    },\n    {\n        name: \"Description\",\n        type: \"string\",\n        formatter: \"value ? '\\u{1F4AC}' : ''\",\n        valueKey: \"description\"\n    },\n    {\n        name: \"Statut\",\n        type: \"string\",\n        formatter: \"value === 'accepted' ? '✅' : (value === 'canceled' ? '❌' : (value === 'refused' ? '⛔' : '⌛'))\",\n        valueKey: \"status\"\n    }\n]",
+                  "to": "columns"
+                },
+                {
+                  "expression": "$ctrl.bookings",
+                  "to": "data"
+                },
+                {
+                  "expression": "true",
+                  "to": "enableRowSelection"
+                },
+                {
+                  "expression": "$ctrl.selectedBooking",
+                  "to": "selectedRow"
+                }
+              ],
+              "mapLines": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "div",
+      "nodeName": "div",
+      "elementId": "",
+      "attributes": [],
+      "classList": [],
+      "conditionalClasses": [],
+      "contentType": "text",
+      "displayExpression": "",
+      "events": {},
+      "iterate": {
+        "array": "",
+        "variable": ""
+      },
+      "styles": [],
+      "layout": {
+        "container": {
+          "type": "side-panel",
+          "visible": "$ctrl.sidePanelVisible",
+          "position": "left",
+          "zIndex": 1,
+          "items": []
+        }
+      },
+      "children": [
+        {
+          "name": "Button",
+          "nodeName": "bln-button",
+          "elementId": "",
+          "attributes": [
+            {
+              "property": "core",
+              "value": ""
+            }
+          ],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [],
+          "children": [],
+          "type": "core-component",
+          "id": "button",
+          "expressions": [
+            {
+              "to": "label",
+              "expression": "'Hide Side Panel'"
+            },
+            {
+              "to": "onClick",
+              "expression": "$ctrl.sidePanelVisible = false"
+            },
+            {
+              "to": "icon",
+              "expression": "({\n              \"type\": \"font-icon\",\n              \"style\": \"solid\",\n              \"name\": \"times\",\n              \"position\": \"icon-only\"\n            })"
+            }
+          ],
+          "mapLines": []
+        },
+        {
+          "name": "Date Time Picker",
+          "nodeName": "bln-date-time-picker",
+          "elementId": "",
+          "attributes": [
+            {
+              "property": "core",
+              "value": ""
+            }
+          ],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [],
+          "layout": {},
+          "children": [],
+          "type": "core-component",
+          "id": "date-time-picker",
+          "expressions": [
+            {
+              "expression": "\"Date et Heure\"",
+              "to": "label"
+            },
+            {
+              "expression": "\"La date et l'heure du début de partie\"",
+              "to": "placeholder"
+            },
+            {
+              "expression": "$ctrl.form.newBooking.dateTime",
+              "to": "dateValue"
+            },
+            {
+              "expression": "\"DD/MM/yyy HH:mm\"",
+              "to": "dateFormat"
+            },
+            {
+              "expression": "\"datetime\"",
+              "to": "type"
+            },
+            {
+              "expression": "$ctrl.form.newBooking.dateTime",
+              "to": "datetimeValue"
+            }
+          ],
+          "mapLines": []
+        },
+        {
+          "name": "Dropdown",
+          "nodeName": "bln-dropdown",
+          "elementId": "",
+          "attributes": [
+            {
+              "property": "core",
+              "value": ""
+            }
+          ],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [],
+          "layout": {},
+          "children": [],
+          "type": "core-component",
+          "id": "dropdown",
+          "expressions": [
+            {
+              "expression": "\"Jeu\"",
+              "to": "label"
+            },
+            {
+              "expression": "[{\n        label: \"Warhammer 40k\",\n        value: \"Warhammer 40k\"\n    },\n    {\n        label: \"Age of Sigmar\",\n        value: \"Age of Sigmar\"\n    },\n    {\n        label: \"Star Wars Legion\",\n        value: \"Star Wars Legion\"\n    }\n]",
+              "to": "values"
+            },
+            {
+              "expression": "\"Le jeu qui sera joué\"",
+              "to": "placeholder"
+            },
+            {
+              "expression": "$ctrl.form.newBooking.game",
+              "to": "value"
+            }
+          ],
+          "mapLines": [],
+          "formControl": {
+            "modelName": "value"
+          }
+        },
+        {
+          "name": "Text Input",
+          "nodeName": "bln-text-input",
+          "elementId": "",
+          "attributes": [
+            {
+              "property": "core",
+              "value": ""
+            }
+          ],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [],
+          "layout": {},
+          "children": [],
+          "type": "core-component",
+          "id": "text-input",
+          "expressions": [
+            {
+              "expression": "\"Points\"",
+              "to": "label"
+            },
+            {
+              "expression": "\"number\"",
+              "to": "type"
+            },
+            {
+              "expression": "\"Le nombre de points par joueurs\"",
+              "to": "placeholder"
+            },
+            {
+              "expression": "$ctrl.form.newBooking.points",
+              "to": "value"
+            }
+          ],
+          "mapLines": [],
+          "formControl": {
+            "modelName": "value"
+          }
+        },
+        {
+          "name": "Chip List",
+          "nodeName": "bln-chip-list",
+          "elementId": "",
+          "attributes": [
+            {
+              "property": "core",
+              "value": ""
+            }
+          ],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [],
+          "layout": {},
+          "children": [],
+          "type": "core-component",
+          "id": "chip-list",
+          "expressions": [
+            {
+              "expression": "\"Joueurs\"",
+              "to": "label"
+            },
+            {
+              "expression": "\"Noms ou pseudos des participants\"",
+              "to": "placeholder"
+            },
+            {
+              "expression": "$ctrl.form.newBooking.players",
+              "to": "values"
+            }
+          ],
+          "mapLines": [],
+          "formControl": {
+            "modelName": "values"
+          }
+        },
+        {
+          "name": "Text Input",
+          "nodeName": "bln-text-input",
+          "elementId": "",
+          "attributes": [
+            {
+              "property": "core",
+              "value": ""
+            }
+          ],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [],
+          "layout": {},
+          "children": [],
+          "type": "core-component",
+          "id": "text-input",
+          "expressions": [
+            {
+              "expression": "\"text-area\"",
+              "to": "type"
+            },
+            {
+              "expression": "\"Description\"",
+              "to": "label"
+            },
+            {
+              "expression": "\"Une description optionnelle, e.g. 'Partie d initiation'\"",
+              "to": "placeholder"
+            },
+            {
+              "expression": "$ctrl.form.newBooking.description",
+              "to": "value"
+            }
+          ],
+          "mapLines": [],
+          "formControl": {
+            "modelName": "value"
+          }
+        },
+        {
+          "name": "Button",
+          "nodeName": "bln-button",
+          "elementId": "",
+          "attributes": [
+            {
+              "property": "core",
+              "value": ""
+            }
+          ],
+          "classList": [],
+          "conditionalClasses": [],
+          "contentType": "text",
+          "displayExpression": "",
+          "events": {},
+          "iterate": {
+            "array": "",
+            "variable": ""
+          },
+          "styles": [],
+          "layout": {},
+          "children": [],
+          "type": "core-component",
+          "id": "button",
+          "expressions": [
+            {
+              "expression": "\"primary\"",
+              "to": "type"
+            },
+            {
+              "expression": "\"Réserver\"",
+              "to": "label"
+            },
+            {
+              "expression": "$ctrl.form.handleBook()",
+              "to": "onClick"
+            }
+          ],
+          "mapLines": []
+        }
+      ]
+    }
+  ]
+}

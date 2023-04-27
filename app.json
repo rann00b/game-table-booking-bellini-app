@@ -1,0 +1,27 @@
+{
+  "name": "game-table-booking",
+  "type": "app",
+  "defaultPage": "home",
+  "config": {
+    "config": {
+      "parameters": [],
+      "script": ""
+    },
+    "modules": [],
+    "properties": {
+      "title": "Tableraze - Réservation de Table"
+    },
+    "themes": [
+      {
+        "name": "default",
+        "active": true,
+        "properties": {}
+      }
+    ],
+    "auth": {
+      "enabled": false,
+      "mockedUserAccounts": []
+    },
+    "environments": []
+  }
+}
